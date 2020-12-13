@@ -1,0 +1,24 @@
+.option {
+  padding: 10px;
+  background-color: #9d0a0e;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  border: 1px solid #333333;
+}
+.option.active {
+  background-color: #e7e7db;
+}
+
+.appWrapper {
+  padding: 10px;
+  background-color: #333333;
+  min-height: 100vh;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+.paper {
+  padding: 5px;
+}
