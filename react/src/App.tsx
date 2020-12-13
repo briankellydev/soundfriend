@@ -30,10 +30,10 @@ function App() {
   const [totalUsers, updateTotalUsers] = useState(0);
   const [isAdmin, updateIsAdmin] = useState(false);
   const [volume, updateVolume] = useState(0.25);
+  const [interacted, updateInteracted] = useState(false);
 
   useEffect(() => {
     socket.on('userChange', (totalUsersNumber: number) => {
-      console.log(totalUsersNumber);
       updateTotalUsers(totalUsersNumber);
     });
     socket.on('play', (song: string) => {
@@ -74,43 +74,54 @@ function App() {
     socket.emit('changeVolume', val);
   }
 
+  function interact() {
+    updateInteracted(true);
+  }
+
   return (
     <div className="appWrapper">
-      <Card>
-        <CardHeader title="DnD Jukebox" subheader={'Total Users: ' + totalUsers}></CardHeader>
-        <CardContent>
-            {
-              isAdmin ? (
-                <div className="controls">
-                  <Paper className="paper" elevation={3}>
-                      <Button variant="outlined" color="primary" onClick={play} disabled={!selectedSong}>Play</Button>
-                      <Button variant="outlined" color="secondary" onClick={stop} disabled={!selectedSong}>Stop</Button>
-                      <Button variant="outlined" color="default" onClick={() => changeVolume(0.25)}>25%</Button>
-                      <Button variant="outlined" color="default" onClick={() => changeVolume(0.5)}>50%</Button>
-                      <Button variant="outlined" color="default" onClick={() => changeVolume(0.75)}>75%</Button>
-                      <Button variant="outlined" color="default" onClick={() => changeVolume(1.0)}>100%</Button>
-                  </Paper>
-                </div>
-              ) : (
-                <div className="controls">
-                  <Paper className="paper" elevation={3}>
-                      <Button variant="outlined" color="secondary" onClick={emergencyStop}>Emergency Stop</Button>
-                  </Paper>
-                </div>
-              )
-            }
-            <Paper className="paper" elevation={3}>
-              {SONG_OPTIONS.map((option: string) => {
-                return (
-                  <div className={selectedSong === option ? 'option active' : 'option'} key={'option' + option} onClick={() => selectSong(option)}>
-                    <SongOption option={option}></SongOption>
-                  </div>
-                )
-              })}
-            </Paper>
-            <Player playing={playing} fileName={selectedSong} volume={volume}></Player>
-        </CardContent>
-      </Card>
+      {
+        interacted ? (
+          <Card>
+            <CardHeader title="DnD Jukebox" subheader={'Total Users: ' + totalUsers}></CardHeader>
+            <CardContent>
+                {
+                  isAdmin ? (
+                    <div className="controls">
+                      <Paper className="paper" elevation={3}>
+                          <Button variant="outlined" color="primary" onClick={play} disabled={!selectedSong}>Play</Button>
+                          <Button variant="outlined" color="secondary" onClick={stop} disabled={!selectedSong}>Stop</Button>
+                          <Button variant="outlined" color="default" onClick={() => changeVolume(0.25)}>25%</Button>
+                          <Button variant="outlined" color="default" onClick={() => changeVolume(0.5)}>50%</Button>
+                          <Button variant="outlined" color="default" onClick={() => changeVolume(0.75)}>75%</Button>
+                          <Button variant="outlined" color="default" onClick={() => changeVolume(1.0)}>100%</Button>
+                      </Paper>
+                    </div>
+                  ) : (
+                    <div className="controls">
+                      <Paper className="paper" elevation={3}>
+                          <Button variant="outlined" color="secondary" onClick={emergencyStop}>Emergency Stop</Button>
+                      </Paper>
+                    </div>
+                  )
+                }
+                <Paper className="paper" elevation={3}>
+                  {SONG_OPTIONS.map((option: string) => {
+                    return (
+                      <div className={selectedSong === option ? 'option active' : 'option'} key={'option' + option} onClick={() => selectSong(option)}>
+                        <SongOption option={option}></SongOption>
+                      </div>
+                    )
+                  })}
+                </Paper>
+                <Player playing={playing} fileName={selectedSong} volume={volume}></Player>
+            </CardContent>
+          </Card>
+        ) : (
+          <Button onClick={interact}>Click me to begin!</Button>
+        )
+      }
+      
     </div>
     
   );
