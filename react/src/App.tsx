@@ -4,7 +4,7 @@ import Player from './components/Player';
 import { Button, Card, CardContent, CardHeader, Paper } from '@material-ui/core';
 import SongOption from './components/SongOption';
 import openSocket from "socket.io-client";
-const prod = false;
+const prod = true;
 const ENDPOINT = prod ? window.location.hostname : 'http://localhost:4200';
 const socket = openSocket(ENDPOINT);
 const SONG_OPTIONS = [
