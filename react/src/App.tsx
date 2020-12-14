@@ -21,7 +21,10 @@ const SONG_OPTIONS = [
   'serene',
   'spooky',
   'valkyrie',
-  'psych'
+  'psychedelic',
+  'avemaria',
+  'gregorian',
+  'royal'
 ].sort();
 
 function App() {
@@ -91,6 +94,7 @@ function App() {
                       <Paper className="paper" elevation={3}>
                           <Button variant="outlined" color="primary" onClick={play} disabled={!selectedSong}>Play</Button>
                           <Button variant="outlined" color="secondary" onClick={stop} disabled={!selectedSong}>Stop</Button>
+                          <Button variant="outlined" color="default" onClick={() => changeVolume(0.1)}>10%</Button>
                           <Button variant="outlined" color="default" onClick={() => changeVolume(0.25)}>25%</Button>
                           <Button variant="outlined" color="default" onClick={() => changeVolume(0.5)}>50%</Button>
                           <Button variant="outlined" color="default" onClick={() => changeVolume(0.75)}>75%</Button>
@@ -118,7 +122,15 @@ function App() {
             </CardContent>
           </Card>
         ) : (
-          <Button onClick={interact}>Click me to begin!</Button>
+          <Card>
+            <CardHeader title="DnD Jukebox"></CardHeader>
+            <CardContent>
+              <div className="center">
+                <Button variant="outlined" color="primary" onClick={interact}>Click me to begin!</Button>
+              </div>
+            </CardContent>
+          </Card>
+          
         )
       }
       
