@@ -29,7 +29,6 @@ let totalUsers = 0;
 io.on('connection', (socket) => {
   console.log('socket connected');
     totalUsers += 1;
-    socket.emit('isAdmin', totalUsers === 1);
     socket.emit('userChange', totalUsers);
     socket.broadcast.emit('userChange', totalUsers);
   socket.on('playSong', (song) => {

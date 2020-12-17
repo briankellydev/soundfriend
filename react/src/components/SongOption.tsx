@@ -4,7 +4,7 @@ import './SongOption.css';
 function SongOption(props: any) {
     const {option} = props;
     return (
-        <div>{option}</div>
+        <div>{option.replace('.mp3', '')}</div>
     )
 
 }
