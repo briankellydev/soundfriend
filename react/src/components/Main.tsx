@@ -38,8 +38,11 @@ function Main(props: any) {
         updateTotalUsers(totalUsersNumber);
         });
         socket.on('play', (song: string) => {
-        updateSelectedSong(song);
-        updatePlaying(true);
+            storage.ref().child(song).getDownloadURL().then((url: string) => {
+                updateSrc(url);
+                updateSelectedSong(song);
+                updatePlaying(true);
+            });
         });
         socket.on('stop', () => {
         updatePlaying(false);
@@ -61,9 +64,6 @@ function Main(props: any) {
         if (isAdmin) {
             stop();
             updateSelectedSong(song);
-            storage.ref().child(song).getDownloadURL().then((url: string) => {
-                updateSrc(url);
-            });
         }
     }
 
